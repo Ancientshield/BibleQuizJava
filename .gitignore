@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment ###
+application-dev.properties
+src/main/resources/application-dev.properties
+
+### Claude Code ###
+.claude/
+
+### OS ###
+.DS_Store
