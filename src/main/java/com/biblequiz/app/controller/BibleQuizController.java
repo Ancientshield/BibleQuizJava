@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bible-quiz")
+@RequestMapping("/api/biblequiz")
 public class BibleQuizController {
 
     private final BibleQuizService bibleQuizService;
