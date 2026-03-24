@@ -1,5 +1,9 @@
 package com.biblequiz.app.dto;
 
+/**
+ * 題目 DTO — 回傳給前端的題目資料。
+ * 刻意不含 correctAnswer，防止前端看到答案。
+ */
 public class QuestionDTO {
     private Integer id;
     private String content;
@@ -7,9 +11,9 @@ public class QuestionDTO {
     private String optionB;
     private String optionC;
     private String optionD;
-    // 沒有 correctAnswer！
+    // 注意：刻意不放 correctAnswer，防止洩漏給前端
 
-    // Getters and Setters
+    // ── Getters and Setters ──
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
