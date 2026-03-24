@@ -2,17 +2,22 @@ package com.biblequiz.app.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * 題目 Entity — 對應 question 資料表。
+ * 一個 Entity 類別 = 一張表，一個物件 = 一筆資料列。
+ */
 @Entity
 @Table(name = "question")
 public class Question {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // 主鍵
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 資料庫自動遞增
     private Integer id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT") // 不限長度，預設 VARCHAR(255) 會不夠
     private String content;
 
+    // 四個選項，@Column 明確對應 snake_case 欄位名
     @Column(name = "option_a")
     private String optionA;
 
@@ -25,10 +30,10 @@ public class Question {
     @Column(name = "option_d")
     private String optionD;
 
-    @Column(name = "correct_answer", length = 1)
+    @Column(name = "correct_answer", length = 1) // 單一字母 A/B/C/D，不出現在 DTO 裡
     private String correctAnswer;
 
-    // Getters and Setters
+    // ── Getters and Setters ──
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -50,8 +55,4 @@ public class Question {
     public String getCorrectAnswer() { return correctAnswer; }
     public void setCorrectAnswer(String correctAnswer) { this.correctAnswer = correctAnswer; }
 }
-
-
-
-
 
