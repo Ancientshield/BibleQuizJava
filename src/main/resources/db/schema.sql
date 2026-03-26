@@ -1,9 +1,13 @@
 CREATE TABLE IF NOT EXISTS question (
     id SERIAL PRIMARY KEY,
-    content TEXT NOT NULL,
-    option_a VARCHAR(255) NOT NULL,
-    option_b VARCHAR(255) NOT NULL,
-    option_c VARCHAR(255) NOT NULL,
-    option_d VARCHAR(255) NOT NULL,
-    correct_answer VARCHAR(1) NOT NULL
+    content TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS question_option (
+    id SERIAL PRIMARY KEY,
+    question_id INT NOT NULL REFERENCES question(id) ON DELETE CASCADE,
+    content VARCHAR(255) NOT NULL,
+    is_correct BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE INDEX IF NOT EXISTS idx_option_question_id ON question_option(question_id);

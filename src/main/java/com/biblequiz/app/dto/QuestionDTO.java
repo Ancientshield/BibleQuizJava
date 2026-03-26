@@ -1,17 +1,15 @@
 package com.biblequiz.app.dto;
 
+import java.util.List;
+
 /**
  * 題目 DTO — 回傳給前端的題目資料。
- * 刻意不含 correctAnswer，防止前端看到答案。
+ * 新版直接帶 isCorrect，前端本地驗答，零延遲。
  */
 public class QuestionDTO {
     private Integer id;
     private String content;
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    // 注意：刻意不放 correctAnswer，防止洩漏給前端
+    private List<OptionDTO> options;
 
     // ── Getters and Setters ──
     public Integer getId() { return id; }
@@ -20,15 +18,25 @@ public class QuestionDTO {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public String getOptionA() { return optionA; }
-    public void setOptionA(String optionA) { this.optionA = optionA; }
+    public List<OptionDTO> getOptions() { return options; }
+    public void setOptions(List<OptionDTO> options) { this.options = options; }
 
-    public String getOptionB() { return optionB; }
-    public void setOptionB(String optionB) { this.optionB = optionB; }
+    /**
+     * 選項 DTO — 作為 QuestionDTO 的 static inner class。
+     */
+    public static class OptionDTO {
+        private Integer id;
+        private String content;
+        private boolean isCorrect;
 
-    public String getOptionC() { return optionC; }
-    public void setOptionC(String optionC) { this.optionC = optionC; }
+        // ── Getters and Setters ──
+        public Integer getId() { return id; }
+        public void setId(Integer id) { this.id = id; }
 
-    public String getOptionD() { return optionD; }
-    public void setOptionD(String optionD) { this.optionD = optionD; }
+        public String getContent() { return content; }
+        public void setContent(String content) { this.content = content; }
+
+        public boolean getIsCorrect() { return isCorrect; }
+        public void setIsCorrect(boolean isCorrect) { this.isCorrect = isCorrect; }
+    }
 }
