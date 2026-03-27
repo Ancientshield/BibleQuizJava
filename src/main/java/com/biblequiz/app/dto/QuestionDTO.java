@@ -1,17 +1,14 @@
 package com.biblequiz.app.dto;
 
-/**
- * 題目 DTO — 回傳給前端的題目資料。
- * 刻意不含 correctAnswer，防止前端看到答案。
- */
+import java.util.List;
+
+/** 題目 DTO — 含 options 陣列（每個選項帶 isCorrect），前端本地驗答。 */
 public class QuestionDTO {
     private Integer id;
     private String content;
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    // 注意：刻意不放 correctAnswer，防止洩漏給前端
+    private String category;
+    private String bibleRef;
+    private List<OptionDTO> options;
 
     // ── Getters and Setters ──
     public Integer getId() { return id; }
@@ -20,15 +17,12 @@ public class QuestionDTO {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public String getOptionA() { return optionA; }
-    public void setOptionA(String optionA) { this.optionA = optionA; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
-    public String getOptionB() { return optionB; }
-    public void setOptionB(String optionB) { this.optionB = optionB; }
+    public String getBibleRef() { return bibleRef; }
+    public void setBibleRef(String bibleRef) { this.bibleRef = bibleRef; }
 
-    public String getOptionC() { return optionC; }
-    public void setOptionC(String optionC) { this.optionC = optionC; }
-
-    public String getOptionD() { return optionD; }
-    public void setOptionD(String optionD) { this.optionD = optionD; }
+    public List<OptionDTO> getOptions() { return options; }
+    public void setOptions(List<OptionDTO> options) { this.options = options; }
 }
