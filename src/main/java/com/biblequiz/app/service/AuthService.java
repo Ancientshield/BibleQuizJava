@@ -43,10 +43,9 @@ public class AuthService {
             throw new IllegalArgumentException("此 Email 已被註冊");
         }
 
-        // 建立新使用者
+        // 建立新使用者（name 不在註冊時收，之後在個人設定填，或 OAuth 自動帶回）
         AppUser user = new AppUser();
         user.setEmail(request.getEmail());
-        user.setName(request.getName());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setProvider(AuthProvider.LOCAL);
         user.setLastLoginAt(LocalDateTime.now());
