@@ -3,12 +3,15 @@ package com.biblequiz.app.controller;
 import com.biblequiz.app.dto.AuthRequest;
 import com.biblequiz.app.dto.AuthResponse;
 import com.biblequiz.app.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Tag(name = "認證", description = "Email 註冊、登入、登出、取得使用者資訊")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -19,7 +22,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    /** POST /api/auth/register — Email 註冊，回傳 JWT */
+    @Operation(summary = "Email 註冊", description = "傳入 email + password，回傳 JWT token + 使用者資訊")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         try {
@@ -30,7 +33,7 @@ public class AuthController {
         }
     }
 
-    /** POST /api/auth/login — Email 登入，回傳 JWT */
+    @Operation(summary = "Email 登入", description = "傳入 email + password，回傳 JWT token + 使用者資訊")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
@@ -41,7 +44,7 @@ public class AuthController {
         }
     }
 
-    /** GET /api/auth/me — 取得當��使用者資訊（需帶 JWT） */
+    @Operation(summary = "取得當前使用者資訊", description = "需在 header 帶 Authorization: Bearer {token}")
     @GetMapping("/me")
     public ResponseEntity<?> me() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,7 +57,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    /** POST /api/auth/logout — 後端無狀態，前端自行清除 token 即可 */
+    @Operation(summary = "登出", description = "後端無狀態，前端清除 localStorage 的 token 即可")
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         return ResponseEntity.ok(Map.of("message", "登出成功，請清除本地 token"));
