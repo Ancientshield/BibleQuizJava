@@ -45,8 +45,8 @@ public class AuthController {
     }
 
     @Operation(summary = "取得當前使用者資訊", description = "需在 header 帶 Authorization: Bearer {token}")
-    @GetMapping("/me")
-    public ResponseEntity<?> me() {
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getPrincipal() == null) {
             return ResponseEntity.status(401).body(Map.of("error", "未登入"));
