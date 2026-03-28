@@ -2,7 +2,9 @@ package com.biblequiz.app.service;
 
 import com.biblequiz.app.dto.OptionDTO;
 import com.biblequiz.app.dto.QuestionDTO;
+import com.biblequiz.app.entity.BibleBook;
 import com.biblequiz.app.entity.Question;
+import com.biblequiz.app.entity.QuestionCategory;
 import com.biblequiz.app.entity.QuestionOption;
 import com.biblequiz.app.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
@@ -43,8 +45,11 @@ public class BibleQuizService {
         QuestionDTO dto = new QuestionDTO();
         dto.setId(question.getId());
         dto.setContent(question.getContent());
-        dto.setCategory(question.getCategory());
-        dto.setBibleRef(question.getBibleRef());
+
+        QuestionCategory category = question.getCategory();
+        dto.setCategory(category != null ? category.getName() : null);
+
+        dto.setBibleRef(buildBibleRef(question));
 
         List<OptionDTO> optionDTOs = question.getOptions().stream()
                 .map(this::convertOptionToDTO)
@@ -52,6 +57,31 @@ public class BibleQuizService {
         dto.setOptions(optionDTOs);
 
         return dto;
+    }
+
+    /**
+     * 從結構化欄位組出經文出處字串。
+     * 例如：「創世記 6:14」或「創世記 6:14-16」
+     */
+    private String buildBibleRef(Question question) {
+        BibleBook book = question.getBibleBook();
+        if (book == null) return null;
+
+        StringBuilder sb = new StringBuilder(book.getName());
+
+        if (question.getBibleChapter() != null) {
+            sb.append(' ').append(question.getBibleChapter());
+
+            if (question.getBibleVerseStart() != null) {
+                sb.append(':').append(question.getBibleVerseStart());
+
+                if (question.getBibleVerseEnd() != null) {
+                    sb.append('-').append(question.getBibleVerseEnd());
+                }
+            }
+        }
+
+        return sb.toString();
     }
 
     private OptionDTO convertOptionToDTO(QuestionOption option) {

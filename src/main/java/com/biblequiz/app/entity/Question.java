@@ -15,11 +15,22 @@ public class Question {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(length = 20)
-    private String category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private QuestionCategory category;
 
-    @Column(name = "bible_ref", length = 50)
-    private String bibleRef;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bible_book_id")
+    private BibleBook bibleBook;
+
+    @Column(name = "bible_chapter")
+    private Short bibleChapter;
+
+    @Column(name = "bible_verse_start")
+    private Short bibleVerseStart;
+
+    @Column(name = "bible_verse_end")
+    private Short bibleVerseEnd;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionOption> options;
@@ -31,11 +42,20 @@ public class Question {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public QuestionCategory getCategory() { return category; }
+    public void setCategory(QuestionCategory category) { this.category = category; }
 
-    public String getBibleRef() { return bibleRef; }
-    public void setBibleRef(String bibleRef) { this.bibleRef = bibleRef; }
+    public BibleBook getBibleBook() { return bibleBook; }
+    public void setBibleBook(BibleBook bibleBook) { this.bibleBook = bibleBook; }
+
+    public Short getBibleChapter() { return bibleChapter; }
+    public void setBibleChapter(Short bibleChapter) { this.bibleChapter = bibleChapter; }
+
+    public Short getBibleVerseStart() { return bibleVerseStart; }
+    public void setBibleVerseStart(Short bibleVerseStart) { this.bibleVerseStart = bibleVerseStart; }
+
+    public Short getBibleVerseEnd() { return bibleVerseEnd; }
+    public void setBibleVerseEnd(Short bibleVerseEnd) { this.bibleVerseEnd = bibleVerseEnd; }
 
     public List<QuestionOption> getOptions() { return options; }
     public void setOptions(List<QuestionOption> options) { this.options = options; }
