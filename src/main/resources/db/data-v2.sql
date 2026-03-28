@@ -1090,11 +1090,11 @@ INSERT INTO question_option (question_id, content, is_correct) VALUES (153, '亞
 INSERT INTO question_option (question_id, content, is_correct) VALUES (153, '波斯', FALSE);
 
 -- Q154
-INSERT INTO question (id, content, category, bible_ref) VALUES (154, '保羅寫「愛的真諦」（哥林多前書十三章）是寫給哪個城市的教會？', '聖經地理', '哥林多前書 1:2');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '哥林多', TRUE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '以弗所', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '腓立比', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '羅馬', FALSE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (154, '耶穌使拉撒路復活的事發生在哪個村莊？', '聖經地理', '約翰福音 11:1');
+INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '拿撒勒', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '伯大尼', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '迦百農', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (154, '伯利恆', FALSE);
 
 -- Q155
 INSERT INTO question (id, content, category, bible_ref) VALUES (155, '彼得看見大布異象時身在哪個城市？', '聖經地理', '使徒行傳 10:9-10');
@@ -1869,18 +1869,18 @@ INSERT INTO question_option (question_id, content, is_correct) VALUES (262, '民
 INSERT INTO question_option (question_id, content, is_correct) VALUES (262, '申命記', FALSE);
 
 -- Q263
-INSERT INTO question (id, content, category, bible_ref) VALUES (263, '路得的故事記載在哪卷書？', '聖經書卷', '路得記 1:1');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '撒母耳記上', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '士師記', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '路得記', TRUE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '以斯帖記', FALSE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (263, '以色列人在曠野被數點人口的記載主要在哪卷書？', '聖經書卷', '民數記 1:1-3');
+INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '出埃及記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '利未記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '民數記', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (263, '申命記', FALSE);
 
 -- Q264
-INSERT INTO question (id, content, category, bible_ref) VALUES (264, '約拿被大魚吞的故事記載在哪卷書？', '聖經書卷', '約拿書 1:17');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '以賽亞書', FALSE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (264, '「必有童女懷孕生子，給他起名叫以馬內利」這預言出自哪卷書？', '聖經書卷', '以賽亞書 7:14');
 INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '耶利米書', FALSE);
 INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '以西結書', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '約拿書', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '以賽亞書', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (264, '何西阿書', FALSE);
 
 -- Q265
 INSERT INTO question (id, content, category, bible_ref) VALUES (265, '「耶和華是我的牧者，我必不致缺乏」出自哪卷書？', '聖經書卷', '詩篇 23:1');
@@ -1890,11 +1890,11 @@ INSERT INTO question_option (question_id, content, is_correct) VALUES (265, '傳
 INSERT INTO question_option (question_id, content, is_correct) VALUES (265, '以賽亞書', FALSE);
 
 -- Q266
-INSERT INTO question (id, content, category, bible_ref) VALUES (266, '但以理在獅子坑中的故事記載在哪卷書？', '聖經書卷', '但以理書 6:16-23');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '以西結書', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '但以理書', TRUE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '以賽亞書', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '耶利米書', FALSE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (266, '聖經中專門記載獻祭條例和潔淨律法的是哪卷書？', '聖經書卷', '利未記 1:1-2');
+INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '出埃及記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '利未記', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '民數記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (266, '申命記', FALSE);
 
 -- Q267
 INSERT INTO question (id, content, category, bible_ref) VALUES (267, '保羅歸主的故事記載在哪卷書？', '聖經書卷', '使徒行傳 9:1-19');
@@ -1918,11 +1918,11 @@ INSERT INTO question_option (question_id, content, is_correct) VALUES (269, '詩
 INSERT INTO question_option (question_id, content, is_correct) VALUES (269, '約伯記', FALSE);
 
 -- Q270
-INSERT INTO question (id, content, category, bible_ref) VALUES (270, '以斯帖拯救猶太人的故事記載在哪卷書？', '聖經書卷', '以斯帖記 4:14');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '路得記', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '以斯帖記', TRUE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '尼希米記', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '以斯拉記', FALSE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (270, '摩西臨終前向以色列人重申律法的演講記載在哪卷書？', '聖經書卷', '申命記 1:1-5');
+INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '出埃及記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '民數記', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '申命記', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (270, '約書亞記', FALSE);
 
 -- Q271
 INSERT INTO question (id, content, category, bible_ref) VALUES (271, '耶穌的登山寶訓記載在哪卷書？', '聖經書卷', '馬太福音 5-7');
@@ -1960,11 +1960,11 @@ INSERT INTO question_option (question_id, content, is_correct) VALUES (275, '使
 INSERT INTO question_option (question_id, content, is_correct) VALUES (275, '啟示錄', FALSE);
 
 -- Q276
-INSERT INTO question (id, content, category, bible_ref) VALUES (276, '約伯受苦的故事記載在哪卷書？', '聖經書卷', '約伯記 1:1');
-INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '詩篇', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '箴言', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '傳道書', FALSE);
-INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '約伯記', TRUE);
+INSERT INTO question (id, content, category, bible_ref) VALUES (276, '「耶和華啊，求你醫治我，我便痊癒；求你拯救我，我便得救」出自哪卷書？', '聖經書卷', '耶利米書 17:14');
+INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '以賽亞書', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '耶利米書', TRUE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '以西結書', FALSE);
+INSERT INTO question_option (question_id, content, is_correct) VALUES (276, '何西阿書', FALSE);
 
 -- Q277
 INSERT INTO question (id, content, category, bible_ref) VALUES (277, '耶穌誕生的故事最詳細地記載在哪卷福音書？', '聖經書卷', '路加福音 2:1-20');
