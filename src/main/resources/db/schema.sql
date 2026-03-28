@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS app_user (
     provider      VARCHAR(20) NOT NULL DEFAULT 'local',          -- local / google / line / facebook / instagram
     provider_id   VARCHAR(255),                                  -- OAuth provider 的 user ID（local 為 null）
     role          VARCHAR(20) NOT NULL DEFAULT 'USER',           -- USER / ADMIN
+    email_verified BOOLEAN NOT NULL DEFAULT FALSE,               -- email 驗證完成才能登入
     created_at    TIMESTAMP NOT NULL DEFAULT NOW(),
     last_login_at TIMESTAMP
 );
@@ -77,3 +78,19 @@ CREATE TABLE IF NOT EXISTS quiz_answer_log (
 
 CREATE INDEX IF NOT EXISTS idx_answer_log_session  ON quiz_answer_log(session_id);
 CREATE INDEX IF NOT EXISTS idx_answer_log_question ON quiz_answer_log(question_id);
+
+-- ============================================================
+-- 7. auth_token — 驗證 / 重設密碼用的一次性 token
+-- ============================================================
+CREATE TABLE IF NOT EXISTS auth_token (
+    id          BIGSERIAL PRIMARY KEY,
+    user_id     BIGINT NOT NULL REFERENCES app_user(id) ON DELETE CASCADE,
+    token       VARCHAR(255) NOT NULL UNIQUE,
+    type        VARCHAR(20) NOT NULL,                              -- VERIFY_EMAIL / RESET_PASSWORD
+    expires_at  TIMESTAMP NOT NULL,
+    used_at     TIMESTAMP,                                         -- null = 尚未使用
+    created_at  TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_auth_token_token   ON auth_token(token);
+CREATE INDEX IF NOT EXISTS idx_auth_token_user_id ON auth_token(user_id);
