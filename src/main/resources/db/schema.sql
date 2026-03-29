@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS app_user (
     name          VARCHAR(255),
     password_hash VARCHAR(255),                                  -- email 註冊用，OAuth 使用者為 null
     avatar_url    VARCHAR(500),                                  -- OAuth 頭像
-    provider      VARCHAR(20) NOT NULL DEFAULT 'local',          -- local / google / line / facebook / instagram
+    provider      VARCHAR(20) NOT NULL DEFAULT 'local',          -- local / google / line / facebook / x
     provider_id   VARCHAR(255),                                  -- OAuth provider 的 user ID（local 為 null）
     role          VARCHAR(20) NOT NULL DEFAULT 'USER',           -- USER / ADMIN
     email_verified BOOLEAN NOT NULL DEFAULT FALSE,               -- email 驗證完成才能登入

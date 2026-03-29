@@ -54,7 +54,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         if (provider == AuthProvider.LINE) {
             userProviderId = oAuth2User.getAttribute("userId");
             userAvatar = oAuth2User.getAttribute("pictureUrl");
-        } else if (provider == AuthProvider.FACEBOOK || provider == AuthProvider.INSTAGRAM) {
+        } else if (provider == AuthProvider.FACEBOOK) {
             userProviderId = oAuth2User.getAttribute("id");
             userAvatar = oAuth2User.getAttribute("picture");
         } else {
