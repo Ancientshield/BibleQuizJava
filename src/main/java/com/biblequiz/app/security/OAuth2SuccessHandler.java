@@ -63,11 +63,15 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             userAvatar = oAuth2User.getAttribute("picture");
         }
 
+        // LINE 的 profile API 不回傳 email（除非用 OpenID Connect），用 providerId 生成佔位 email
+        final String emailToSave = (userEmail != null) ? userEmail
+                : userProviderId + "@" + provider.name().toLowerCase() + ".oauth";
+
         // 查 DB：有帳號就更新，沒有就建新的
         AppUser user = userRepository.findByProviderAndProviderId(provider, userProviderId)
                 .orElseGet(() -> {
                     AppUser newUser = new AppUser();
-                    newUser.setEmail(userEmail);
+                    newUser.setEmail(emailToSave);
                     newUser.setProvider(provider);
                     newUser.setProviderId(userProviderId);
                     newUser.setEmailVerified(true);  // OAuth 帳號視為已驗證
