@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * OAuth2 登入成功後的處理器 — 四家 OAuth 共用。
@@ -47,19 +48,33 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         // 根據 provider 取出對應的 attribute key
         final String userProviderId;
-        final String userEmail = oAuth2User.getAttribute("email");
-        final String userName = oAuth2User.getAttribute("name");
+        final String userEmail;
+        final String userName;
         final String userAvatar;
 
-        if (provider == AuthProvider.LINE) {
+        if (provider == AuthProvider.X) {
+            // X 的 user info 回傳格式：{ data: { id: "...", name: "...", username: "..." } }
+            @SuppressWarnings("unchecked")
+            Map<String, Object> data = oAuth2User.getAttribute("data");
+            userProviderId = data != null ? String.valueOf(data.get("id")) : null;
+            userEmail = null;  // X 不回傳 email
+            userName = data != null ? (String) data.get("name") : null;
+            userAvatar = null;  // X user info API 不回傳頭像
+        } else if (provider == AuthProvider.LINE) {
             userProviderId = oAuth2User.getAttribute("userId");
+            userEmail = oAuth2User.getAttribute("email");
+            userName = oAuth2User.getAttribute("displayName");
             userAvatar = oAuth2User.getAttribute("pictureUrl");
         } else if (provider == AuthProvider.FACEBOOK) {
             userProviderId = oAuth2User.getAttribute("id");
+            userEmail = oAuth2User.getAttribute("email");
+            userName = oAuth2User.getAttribute("name");
             userAvatar = oAuth2User.getAttribute("picture");
         } else {
             // Google 用 "sub"
             userProviderId = oAuth2User.getAttribute("sub");
+            userEmail = oAuth2User.getAttribute("email");
+            userName = oAuth2User.getAttribute("name");
             userAvatar = oAuth2User.getAttribute("picture");
         }
 
