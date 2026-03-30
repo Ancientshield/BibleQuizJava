@@ -1,6 +1,7 @@
 package com.biblequiz.app.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /** 題目 Entity — 對應 question 資料表。 */
@@ -32,8 +33,32 @@ public class Question {
     @Column(name = "bible_verse_end")
     private Short bibleVerseEnd;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private QuestionStatus status = QuestionStatus.PUBLISHED;
+
+    // 建立者（種子資料為 null，使用者投稿才有值）
+    @Column(name = "created_by")
+    private Long createdBy;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionOption> options;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     // ── Getters and Setters ──
     public Integer getId() { return id; }
@@ -56,6 +81,17 @@ public class Question {
 
     public Short getBibleVerseEnd() { return bibleVerseEnd; }
     public void setBibleVerseEnd(Short bibleVerseEnd) { this.bibleVerseEnd = bibleVerseEnd; }
+
+    public QuestionStatus getStatus() { return status; }
+    public void setStatus(QuestionStatus status) { this.status = status; }
+
+    public Long getCreatedBy() { return createdBy; }
+    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     public List<QuestionOption> getOptions() { return options; }
     public void setOptions(List<QuestionOption> options) { this.options = options; }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Tag(name = "認證", description = "Email 註冊、登入、登出、取得使用者資訊")
+@Tag(name = "認證", description = "Email 註冊、登入、登出、Email 驗證、取得使用者資訊")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -33,12 +33,56 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "驗證 Email", description = "使用者點擊驗證信中的連結，驗證成功後導向前端登入頁")
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token) {
+        try {
+            authService.verifyEmail(token);
+            return ResponseEntity.ok(Map.of("message", "Email 驗證成功，請登入"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @Operation(summary = "重寄驗證信", description = "傳入 email，重新發送驗證信（冷卻 60 秒）")
+    @PostMapping("/resend-verification")
+    public ResponseEntity<?> resendVerification(@RequestBody Map<String, String> request) {
+        try {
+            authService.resendVerificationEmail(request.get("email"));
+            return ResponseEntity.ok(Map.of("message", "驗證信已重新寄出，請查收信箱"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @Operation(summary = "Email 登入", description = "傳入 email + password，回傳 JWT token + 使用者資訊")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @Operation(summary = "忘記密碼 — 發送重設信", description = "傳入 email，寄出含重設連結的信（冷卻 60 秒）")
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
+        try {
+            authService.forgotPassword(request.get("email"));
+            return ResponseEntity.ok(Map.of("message", "密碼重設信已寄出，請查收信箱"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @Operation(summary = "忘記密碼 — 設定新密碼", description = "帶 token + 新密碼，驗證 token 後更新密碼")
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+        try {
+            authService.resetPassword(request.get("token"), request.get("password"));
+            return ResponseEntity.ok(Map.of("message", "密碼已重設，請用新密碼登入"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

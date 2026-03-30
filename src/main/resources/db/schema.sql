@@ -74,9 +74,9 @@ ALTER TABLE question
     FOREIGN KEY (created_by) REFERENCES app_user(id);
 
 -- ============================================================
--- 7. quiz_session — 測驗場次（每完成一局建一筆，僅登入使用者）
+-- 7. quiz_round — 測驗回合（每完成一局建一筆，僅登入使用者）
 -- ============================================================
-CREATE TABLE IF NOT EXISTS quiz_session (
+CREATE TABLE IF NOT EXISTS quiz_round (
     id              BIGSERIAL PRIMARY KEY,
     user_id         BIGINT NOT NULL REFERENCES app_user(id),
     score           INT NOT NULL,
@@ -84,21 +84,21 @@ CREATE TABLE IF NOT EXISTS quiz_session (
     completed_at    TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_session_user_id ON quiz_session(user_id);
+CREATE INDEX IF NOT EXISTS idx_round_user_id ON quiz_round(user_id);
 
 -- ============================================================
 -- 8. quiz_answer_log — 作答紀錄（每局 10 筆）
 -- ============================================================
 CREATE TABLE IF NOT EXISTS quiz_answer_log (
     id                 BIGSERIAL PRIMARY KEY,
-    session_id         BIGINT NOT NULL REFERENCES quiz_session(id) ON DELETE CASCADE,
+    round_id           BIGINT NOT NULL REFERENCES quiz_round(id) ON DELETE CASCADE,
     question_id        INT NOT NULL REFERENCES question(id),
     selected_option_id INT NOT NULL REFERENCES question_option(id),
     is_correct         BOOLEAN NOT NULL,
     answered_at        TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_answer_log_session  ON quiz_answer_log(session_id);
+CREATE INDEX IF NOT EXISTS idx_answer_log_round    ON quiz_answer_log(round_id);
 CREATE INDEX IF NOT EXISTS idx_answer_log_question ON quiz_answer_log(question_id);
 
 -- ============================================================

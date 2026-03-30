@@ -1,8 +1,10 @@
 package com.biblequiz.app.repository;
 
 import com.biblequiz.app.entity.Question;
+import com.biblequiz.app.entity.QuestionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -14,4 +16,11 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
            "LEFT JOIN FETCH q.category " +
            "LEFT JOIN FETCH q.bibleBook")
     List<Question> findAllWithOptions();
+
+    @Query("SELECT DISTINCT q FROM Question q " +
+           "JOIN FETCH q.options " +
+           "LEFT JOIN FETCH q.category " +
+           "LEFT JOIN FETCH q.bibleBook " +
+           "WHERE q.status = :status")
+    List<Question> findAllWithOptionsByStatus(@Param("status") QuestionStatus status);
 }

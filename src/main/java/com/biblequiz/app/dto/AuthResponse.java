@@ -8,13 +8,15 @@ public class AuthResponse {
     private String email;
     private String name;
     private String role;
+    private String avatarUrl;
 
-    public AuthResponse(String token, Long id, String email, String name, String role) {
+    public AuthResponse(String token, Long id, String email, String name, String role, String avatarUrl) {
         this.token = token;
         this.id = id;
         this.email = email;
         this.name = name;
         this.role = role;
+        this.avatarUrl = avatarUrl;
     }
 
     // ── Getters ──
@@ -23,4 +25,5 @@ public class AuthResponse {
     public String getEmail() { return email; }
     public String getName() { return name; }
     public String getRole() { return role; }
+    public String getAvatarUrl() { return avatarUrl; }
 }

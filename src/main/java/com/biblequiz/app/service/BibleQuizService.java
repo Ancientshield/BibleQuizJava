@@ -6,6 +6,7 @@ import com.biblequiz.app.entity.BibleBook;
 import com.biblequiz.app.entity.Question;
 import com.biblequiz.app.entity.QuestionCategory;
 import com.biblequiz.app.entity.QuestionOption;
+import com.biblequiz.app.entity.QuestionStatus;
 import com.biblequiz.app.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,11 @@ public class BibleQuizService {
                 .collect(Collectors.toList());
     }
 
-    /** 隨機取得 N 題（撈全部 → 打亂 → 取前 N 筆） */
+    /** 隨機取得 N 題（只從 PUBLISHED 中撈 → 打亂 → 取前 N 筆） */
     public List<QuestionDTO> getRandomQuestions(int count) {
-        List<Question> all = questionRepository.findAllWithOptions();
-        Collections.shuffle(all);
-        return all.stream()
+        List<Question> published = questionRepository.findAllWithOptionsByStatus(QuestionStatus.PUBLISHED);
+        Collections.shuffle(published);
+        return published.stream()
                 .limit(count)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
