@@ -67,7 +67,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             userAvatar = oAuth2User.getAttribute("pictureUrl");
         } else if (provider == AuthProvider.GITHUB) {
             // GitHub 回傳：id (Integer), login (username), name, email, avatar_url
-            userProviderId = String.valueOf(oAuth2User.getAttribute("id"));
+            userProviderId = String.valueOf((Object) oAuth2User.getAttribute("id"));
             userEmail = oAuth2User.getAttribute("email");
             String ghName = oAuth2User.getAttribute("name");
             userName = ghName != null ? ghName : oAuth2User.getAttribute("login");
