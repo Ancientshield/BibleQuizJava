@@ -1,5 +1,5 @@
 package com.biblequiz.app.entity;
 
 public enum AuthProvider {
-    LOCAL, GOOGLE, LINE, FACEBOOK, X
+    LOCAL, GOOGLE, LINE, GITHUB, X
 }

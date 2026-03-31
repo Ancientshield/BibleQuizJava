@@ -65,11 +65,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             userEmail = oAuth2User.getAttribute("email");
             userName = oAuth2User.getAttribute("displayName");
             userAvatar = oAuth2User.getAttribute("pictureUrl");
-        } else if (provider == AuthProvider.FACEBOOK) {
-            userProviderId = oAuth2User.getAttribute("id");
+        } else if (provider == AuthProvider.GITHUB) {
+            // GitHub 回傳：id (Integer), login (username), name, email, avatar_url
+            userProviderId = String.valueOf(oAuth2User.getAttribute("id"));
             userEmail = oAuth2User.getAttribute("email");
-            userName = oAuth2User.getAttribute("name");
-            userAvatar = oAuth2User.getAttribute("picture");
+            String ghName = oAuth2User.getAttribute("name");
+            userName = ghName != null ? ghName : oAuth2User.getAttribute("login");
+            userAvatar = oAuth2User.getAttribute("avatar_url");
         } else {
             // Google 用 "sub"
             userProviderId = oAuth2User.getAttribute("sub");

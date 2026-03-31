@@ -27,16 +27,12 @@ public class UserQuizController {
     public ResponseEntity<?> submitQuiz(@RequestBody QuizSubmitRequest request) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        try {
-            QuizRound round = quizRoundService.submitQuiz(userId, request);
-            return ResponseEntity.ok(Map.of(
-                    "message", "作答紀錄已儲存",
-                    "roundId", round.getId(),
-                    "score", round.getScore(),
-                    "totalQuestions", round.getTotalQuestions()
-            ));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
+        QuizRound round = quizRoundService.submitQuiz(userId, request);
+        return ResponseEntity.ok(Map.of(
+                "message", "作答紀錄已儲存",
+                "roundId", round.getId(),
+                "score", round.getScore(),
+                "totalQuestions", round.getTotalQuestions()
+        ));
     }
 }

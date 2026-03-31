@@ -6,8 +6,10 @@ import com.biblequiz.app.entity.QuizAnswerLog;
 import com.biblequiz.app.entity.QuizRound;
 import com.biblequiz.app.repository.QuestionOptionRepository;
 import com.biblequiz.app.repository.QuizRoundRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class QuizRoundService {
     public QuizRound submitQuiz(Long userId, QuizSubmitRequest request) {
         List<QuizSubmitRequest.AnswerEntry> answers = request.getAnswers();
         if (answers == null || answers.isEmpty()) {
-            throw new IllegalArgumentException("作答紀錄不能為空");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "作答紀錄不能為空");
         }
 
         // 後端重新計算分數，不信任前端
@@ -42,7 +44,7 @@ public class QuizRoundService {
 
         for (QuizSubmitRequest.AnswerEntry entry : answers) {
             QuestionOption option = questionOptionRepository.findById(entry.getSelectedOptionId())
-                    .orElseThrow(() -> new IllegalArgumentException("選項不存在：" + entry.getSelectedOptionId()));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "選項不存在：" + entry.getSelectedOptionId()));
 
             boolean isCorrect = Boolean.TRUE.equals(option.getIsCorrect());
             if (isCorrect) correctCount++;
