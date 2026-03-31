@@ -35,7 +35,8 @@ public class UserHistoryService {
 
     /** 我的個人統計（總遊戲次數、平均分數、最高分） */
     public UserStatsDTO getStats(Long userId) {
-        Object[] raw = quizRoundRepository.findUserStats(userId);
+        Object result = quizRoundRepository.findUserStats(userId);
+        Object[] raw = (result instanceof Object[]) ? (Object[]) result : new Object[]{0L, 0.0, 0};
 
         UserStatsDTO dto = new UserStatsDTO();
         dto.setTotalGames(((Number) raw[0]).longValue());

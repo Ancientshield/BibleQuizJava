@@ -11,6 +11,7 @@ import com.biblequiz.app.repository.AuthTokenRepository;
 import com.biblequiz.app.security.JwtTokenProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -114,6 +115,7 @@ public class AuthService {
     }
 
     /** 驗證 Email：用 token 查找，檢查有效性，標記帳號為已驗證 */
+    @Transactional
     public void verifyEmail(String token) {
         AuthToken authToken = authTokenRepository.findByToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("驗證連結無效"));
