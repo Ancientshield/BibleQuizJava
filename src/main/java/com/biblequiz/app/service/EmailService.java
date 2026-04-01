@@ -25,7 +25,7 @@ public class EmailService {
 
     /** 發送 email 驗證信 */
     public void sendVerificationEmail(String to, String token) {
-        String link = baseUrl + "/api/auth/verify?token=" + token;
+        String link = baseUrl + "/verify?token=" + token;
         String subject = "BibleQuiz — 請驗證你的 Email";
         String body = """
                 <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
