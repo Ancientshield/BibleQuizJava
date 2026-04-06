@@ -90,7 +90,7 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    /** 編輯題目 — 使用者只能改自己的 PENDING，管理者不限。 */
+    /** 編輯題目 — 使用者只能改自己的 PENDING/REJECTED，管理者不限。 */
     @Transactional
     public QuestionDetailDTO update(Integer id, QuestionUpdateRequest request, Long userId, boolean isAdmin) {
         validateUpdateRequest(request);
@@ -101,6 +101,11 @@ public class QuestionService {
         checkEditPermission(question, userId, isAdmin);
 
         question.setContent(request.getContent().trim());
+
+        // 被退回的題目編輯後，重新進入審核流程
+        if (question.getStatus() == QuestionStatus.REJECTED) {
+            question.setStatus(QuestionStatus.PENDING);
+        }
 
         // 替換選項：清除舊的 → 加入新的（orphanRemoval 自動刪除舊選項）
         question.getOptions().clear();
@@ -194,8 +199,8 @@ public class QuestionService {
         if (!userId.equals(question.getCreatedBy())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "只能操作自己的題目");
         }
-        if (question.getStatus() != QuestionStatus.PENDING) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "只能操作待審核的題目");
+        if (question.getStatus() != QuestionStatus.PENDING && question.getStatus() != QuestionStatus.REJECTED) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "只能操作待審核或被退回的題目");
         }
     }
 
