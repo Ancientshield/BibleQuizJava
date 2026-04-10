@@ -1,9 +1,11 @@
 package com.biblequiz.app.service;
 
 import com.biblequiz.app.dto.QuizSubmitRequest;
+import com.biblequiz.app.entity.AppUser;
 import com.biblequiz.app.entity.QuestionOption;
 import com.biblequiz.app.entity.QuizAnswerLog;
 import com.biblequiz.app.entity.QuizRound;
+import com.biblequiz.app.repository.AppUserRepository;
 import com.biblequiz.app.repository.QuestionOptionRepository;
 import com.biblequiz.app.repository.QuizRoundRepository;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,14 @@ public class QuizRoundService {
 
     private final QuizRoundRepository quizRoundRepository;
     private final QuestionOptionRepository questionOptionRepository;
+    private final AppUserRepository appUserRepository;
 
     public QuizRoundService(QuizRoundRepository quizRoundRepository,
-                            QuestionOptionRepository questionOptionRepository) {
+                            QuestionOptionRepository questionOptionRepository,
+                            AppUserRepository appUserRepository) {
         this.quizRoundRepository = quizRoundRepository;
         this.questionOptionRepository = questionOptionRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     /**
@@ -67,6 +72,15 @@ public class QuizRoundService {
         }
         round.setAnswerLogs(logs);
 
-        return quizRoundRepository.save(round);
+        QuizRound saved = quizRoundRepository.save(round);
+
+        // 累加總積分（答對題數 × 10）
+        AppUser user = appUserRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.setTotalScore(user.getTotalScore() + (long) correctCount * 10);
+            appUserRepository.save(user);
+        }
+
+        return saved;
     }
 }

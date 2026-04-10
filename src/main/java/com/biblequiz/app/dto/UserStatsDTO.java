@@ -5,7 +5,8 @@ public class UserStatsDTO {
 
     private long totalGames;
     private double averageScore;
-    private int bestScore;
+    private int perfectGames;
+    private long totalScore;
 
     // ── Getters and Setters ──
     public long getTotalGames() { return totalGames; }
@@ -14,6 +15,9 @@ public class UserStatsDTO {
     public double getAverageScore() { return averageScore; }
     public void setAverageScore(double averageScore) { this.averageScore = averageScore; }
 
-    public int getBestScore() { return bestScore; }
-    public void setBestScore(int bestScore) { this.bestScore = bestScore; }
+    public int getPerfectGames() { return perfectGames; }
+    public void setPerfectGames(int perfectGames) { this.perfectGames = perfectGames; }
+
+    public long getTotalScore() { return totalScore; }
+    public void setTotalScore(long totalScore) { this.totalScore = totalScore; }
 }

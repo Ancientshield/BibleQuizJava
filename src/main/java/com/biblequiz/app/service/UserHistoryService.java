@@ -8,6 +8,8 @@ import com.biblequiz.app.entity.BibleBook;
 import com.biblequiz.app.entity.Question;
 import com.biblequiz.app.entity.QuizAnswerLog;
 import com.biblequiz.app.entity.QuizRound;
+import com.biblequiz.app.entity.AppUser;
+import com.biblequiz.app.repository.AppUserRepository;
 import com.biblequiz.app.repository.QuestionRepository;
 import com.biblequiz.app.repository.QuizRoundRepository;
 import org.springframework.http.HttpStatus;
@@ -25,11 +27,14 @@ public class UserHistoryService {
 
     private final QuizRoundRepository quizRoundRepository;
     private final QuestionRepository questionRepository;
+    private final AppUserRepository appUserRepository;
 
     public UserHistoryService(QuizRoundRepository quizRoundRepository,
-                              QuestionRepository questionRepository) {
+                              QuestionRepository questionRepository,
+                              AppUserRepository appUserRepository) {
         this.quizRoundRepository = quizRoundRepository;
         this.questionRepository = questionRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     /** 我的遊戲歷史（每局分數 + 日期，新到舊） */
@@ -108,15 +113,27 @@ public class UserHistoryService {
         return sb.toString();
     }
 
-    /** 我的個人統計（總遊戲次數、平均分數、最高分） */
+    /** 我的個人統計（總遊戲次數、平均分數、最高分、總積分） */
     public UserStatsDTO getStats(Long userId) {
         Object result = quizRoundRepository.findUserStats(userId);
-        Object[] raw = (result instanceof Object[]) ? (Object[]) result : new Object[]{0L, 0.0, 0};
+
+        // JPA aggregate query 可能回 Object[] 或 Object[][]，統一處理
+        Object[] row;
+        if (result instanceof Object[] arr && arr.length > 0 && arr[0] instanceof Number) {
+            row = arr;
+        } else if (result instanceof Object[] arr && arr.length > 0 && arr[0] instanceof Object[]) {
+            row = (Object[]) arr[0];
+        } else {
+            row = new Object[]{0L, 0.0, 0};
+        }
 
         UserStatsDTO dto = new UserStatsDTO();
-        dto.setTotalGames(((Number) raw[0]).longValue());
-        dto.setAverageScore(Math.round(((Number) raw[1]).doubleValue() * 10.0) / 10.0);
-        dto.setBestScore(((Number) raw[2]).intValue());
+        dto.setTotalGames(((Number) row[0]).longValue());
+        dto.setAverageScore(Math.round(((Number) row[1]).doubleValue() * 10.0) / 10.0);
+        dto.setPerfectGames(((Number) row[2]).intValue());
+
+        AppUser user = appUserRepository.findById(userId).orElse(null);
+        dto.setTotalScore(user != null ? user.getTotalScore() : 0L);
         return dto;
     }
 }

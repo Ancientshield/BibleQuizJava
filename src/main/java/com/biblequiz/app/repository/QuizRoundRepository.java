@@ -14,8 +14,9 @@ public interface QuizRoundRepository extends JpaRepository<QuizRound, Long> {
     // 使用者的遊戲歷史（新到舊）
     List<QuizRound> findByUserIdOrderByCompletedAtDesc(Long userId);
 
-    // 使用者個人統計（回傳 [totalGames, avgScore, bestScore]）
-    @Query("SELECT COUNT(r), COALESCE(AVG(r.score), 0), COALESCE(MAX(r.score), 0) " +
+    // 使用者個人統計（回傳 [totalGames, avgScore, perfectGames]）
+    @Query("SELECT COUNT(r), COALESCE(AVG(r.score), 0), " +
+           "SUM(CASE WHEN r.score = r.totalQuestions THEN 1 ELSE 0 END) " +
            "FROM QuizRound r WHERE r.userId = :userId")
     Object[] findUserStats(@Param("userId") Long userId);
 }

@@ -37,6 +37,9 @@ public class AppUser {
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
 
+    @Column(name = "total_score", nullable = false)
+    private Long totalScore = 0L;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -75,6 +78,9 @@ public class AppUser {
 
     public Boolean getEmailVerified() { return emailVerified; }
     public void setEmailVerified(Boolean emailVerified) { this.emailVerified = emailVerified; }
+
+    public Long getTotalScore() { return totalScore; }
+    public void setTotalScore(Long totalScore) { this.totalScore = totalScore; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
 
