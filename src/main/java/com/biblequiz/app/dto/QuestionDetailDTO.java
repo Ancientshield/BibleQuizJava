@@ -12,10 +12,20 @@ public class QuestionDetailDTO {
     private Integer id;
     private String content;
     private String status;
+    private Short categoryId;
     private String categoryName;
+    private Short bibleBookId;
     private String bibleRef;
+    private Short bibleChapter;
+    private Short bibleVerseStart;
+    private Short bibleVerseEnd;
     private List<OptionDTO> options;
+    private Integer totalAnswered;
+    private Integer correctCount;
+    private Double accuracyRate;
+    private String mostSelectedWrongOption;
     private Long createdBy;
+    private String authorName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -29,17 +39,47 @@ public class QuestionDetailDTO {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
+    public Short getCategoryId() { return categoryId; }
+    public void setCategoryId(Short categoryId) { this.categoryId = categoryId; }
+
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public Short getBibleBookId() { return bibleBookId; }
+    public void setBibleBookId(Short bibleBookId) { this.bibleBookId = bibleBookId; }
 
     public String getBibleRef() { return bibleRef; }
     public void setBibleRef(String bibleRef) { this.bibleRef = bibleRef; }
 
+    public Short getBibleChapter() { return bibleChapter; }
+    public void setBibleChapter(Short bibleChapter) { this.bibleChapter = bibleChapter; }
+
+    public Short getBibleVerseStart() { return bibleVerseStart; }
+    public void setBibleVerseStart(Short bibleVerseStart) { this.bibleVerseStart = bibleVerseStart; }
+
+    public Short getBibleVerseEnd() { return bibleVerseEnd; }
+    public void setBibleVerseEnd(Short bibleVerseEnd) { this.bibleVerseEnd = bibleVerseEnd; }
+
     public List<OptionDTO> getOptions() { return options; }
     public void setOptions(List<OptionDTO> options) { this.options = options; }
 
+    public Integer getTotalAnswered() { return totalAnswered; }
+    public void setTotalAnswered(Integer totalAnswered) { this.totalAnswered = totalAnswered; }
+
+    public Integer getCorrectCount() { return correctCount; }
+    public void setCorrectCount(Integer correctCount) { this.correctCount = correctCount; }
+
+    public Double getAccuracyRate() { return accuracyRate; }
+    public void setAccuracyRate(Double accuracyRate) { this.accuracyRate = accuracyRate; }
+
+    public String getMostSelectedWrongOption() { return mostSelectedWrongOption; }
+    public void setMostSelectedWrongOption(String mostSelectedWrongOption) { this.mostSelectedWrongOption = mostSelectedWrongOption; }
+
     public Long getCreatedBy() { return createdBy; }
     public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
+
+    public String getAuthorName() { return authorName; }
+    public void setAuthorName(String authorName) { this.authorName = authorName; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

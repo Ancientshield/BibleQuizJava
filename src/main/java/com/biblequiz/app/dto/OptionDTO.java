@@ -5,6 +5,7 @@ public class OptionDTO {
     private Integer id;
     private String content;
     private boolean isCorrect;
+    private Integer selectedCount;
 
     // ── Getters and Setters ──
     public Integer getId() { return id; }
@@ -15,4 +16,7 @@ public class OptionDTO {
 
     public boolean isCorrect() { return isCorrect; }
     public void setCorrect(boolean correct) { isCorrect = correct; }
+
+    public Integer getSelectedCount() { return selectedCount; }
+    public void setSelectedCount(Integer selectedCount) { this.selectedCount = selectedCount; }
 }

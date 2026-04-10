@@ -24,4 +24,15 @@ public interface QuizAnswerLogRepository extends JpaRepository<QuizAnswerLog, Lo
     // 全站答對率（回傳 [totalAnswers, correctAnswers]）
     @Query("SELECT COUNT(a), SUM(CASE WHEN a.isCorrect = true THEN 1 ELSE 0 END) FROM QuizAnswerLog a")
     Object[] findOverallAccuracy();
+
+    // 批次：指定題目 ID 的被答次數 + 答對次數
+    @Query("SELECT a.questionId, COUNT(a), SUM(CASE WHEN a.isCorrect = true THEN 1 ELSE 0 END) " +
+           "FROM QuizAnswerLog a WHERE a.questionId IN :ids GROUP BY a.questionId")
+    List<Object[]> findQuestionStatsByIds(@Param("ids") List<Integer> ids);
+
+    // 批次：指定題目 ID 的選項分佈
+    @Query("SELECT a.questionId, a.selectedOptionId, COUNT(a) " +
+           "FROM QuizAnswerLog a WHERE a.questionId IN :ids " +
+           "GROUP BY a.questionId, a.selectedOptionId")
+    List<Object[]> findOptionDistributionByIds(@Param("ids") List<Integer> ids);
 }

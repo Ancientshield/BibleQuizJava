@@ -1,5 +1,6 @@
 package com.biblequiz.app.controller;
 
+import com.biblequiz.app.dto.RoundDetailDTO;
 import com.biblequiz.app.dto.RoundHistoryDTO;
 import com.biblequiz.app.dto.UserStatsDTO;
 import com.biblequiz.app.service.UserHistoryService;
@@ -28,6 +29,13 @@ public class UserHistoryController {
     public ResponseEntity<List<RoundHistoryDTO>> history() {
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(userHistoryService.getHistory(userId));
+    }
+
+    @Operation(summary = "單局詳細回顧", description = "10 題逐題結果：題目、選項、你選了什麼、正確答案、經文出處")
+    @GetMapping("/history/{roundId}")
+    public ResponseEntity<RoundDetailDTO> roundDetail(@PathVariable Long roundId) {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(userHistoryService.getRoundDetail(roundId, userId));
     }
 
     @Operation(summary = "我的個人統計", description = "總遊戲次數、平均分數、最高分")
