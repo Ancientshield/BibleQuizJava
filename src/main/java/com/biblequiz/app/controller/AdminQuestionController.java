@@ -4,10 +4,8 @@ import com.biblequiz.app.dto.AdminPublishRequest;
 import com.biblequiz.app.dto.AdminQuestionUpdateRequest;
 import com.biblequiz.app.dto.QuestionDetailDTO;
 import com.biblequiz.app.entity.BibleBook;
-import com.biblequiz.app.entity.QuestionCategory;
 import com.biblequiz.app.entity.QuestionStatus;
 import com.biblequiz.app.repository.BibleBookRepository;
-import com.biblequiz.app.repository.QuestionCategoryRepository;
 import com.biblequiz.app.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,21 +26,12 @@ import java.util.List;
 public class AdminQuestionController {
 
     private final QuestionService questionService;
-    private final QuestionCategoryRepository questionCategoryRepository;
     private final BibleBookRepository bibleBookRepository;
 
     public AdminQuestionController(QuestionService questionService,
-                                   QuestionCategoryRepository questionCategoryRepository,
                                    BibleBookRepository bibleBookRepository) {
         this.questionService = questionService;
-        this.questionCategoryRepository = questionCategoryRepository;
         this.bibleBookRepository = bibleBookRepository;
-    }
-
-    @Operation(summary = "取得所有分類", description = "篩選/審核下拉選單用（8 類）")
-    @GetMapping("/categories")
-    public ResponseEntity<List<QuestionCategory>> listCategories() {
-        return ResponseEntity.ok(questionCategoryRepository.findAll(Sort.by("sortOrder")));
     }
 
     @Operation(summary = "取得所有書卷", description = "審核/編輯下拉選單用（66 卷）")

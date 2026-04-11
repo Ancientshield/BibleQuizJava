@@ -50,6 +50,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>,
 
     int countByStatus(QuestionStatus status);
 
+    // 判斷某個分類底下還有沒有題目（分類 DELETE 前的 FK 保護）
+    boolean existsByCategory_Id(Short categoryId);
+
     // ── 迭代 2：分頁搜尋後批次載入 ──
 
     @Query("SELECT DISTINCT q FROM Question q " +
