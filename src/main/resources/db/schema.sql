@@ -72,14 +72,14 @@ CREATE TABLE IF NOT EXISTS app_user (
 -- ============================================================
 ALTER TABLE question
     ADD CONSTRAINT fk_question_created_by
-    FOREIGN KEY (created_by) REFERENCES app_user(id);
+    FOREIGN KEY (created_by) REFERENCES app_user(id) ON DELETE SET NULL;
 
 -- ============================================================
 -- 7. quiz_round — 測驗回合（每完成一局建一筆，僅登入使用者）
 -- ============================================================
 CREATE TABLE IF NOT EXISTS quiz_round (
     id              BIGSERIAL PRIMARY KEY,
-    user_id         BIGINT NOT NULL REFERENCES app_user(id),
+    user_id         BIGINT NOT NULL REFERENCES app_user(id) ON DELETE CASCADE,
     score           INT NOT NULL,
     total_questions INT NOT NULL DEFAULT 10,
     completed_at    TIMESTAMP NOT NULL DEFAULT NOW()

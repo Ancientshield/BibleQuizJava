@@ -29,12 +29,44 @@ jobs:
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          LINE_CLIENT_ID: ${{ secrets.LINE_CLIENT_ID }}
+          LINE_CLIENT_SECRET: ${{ secrets.LINE_CLIENT_SECRET }}
+          GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+          X_CLIENT_ID: ${{ secrets.X_CLIENT_ID }}
+          X_CLIENT_SECRET: ${{ secrets.X_CLIENT_SECRET }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DB_URL,DB_USERNAME,DB_PASSWORD,JWT_SECRET,APP_BASE_URL,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,LINE_CLIENT_ID,LINE_CLIENT_SECRET,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET,X_CLIENT_ID,X_CLIENT_SECRET,RESEND_API_KEY
           script: |
             cd ~/biblequiz
+            cat > .env <<EOF
+            DB_URL=$DB_URL
+            DB_USERNAME=$DB_USERNAME
+            DB_PASSWORD=$DB_PASSWORD
+            JWT_SECRET=$JWT_SECRET
+            APP_BASE_URL=$APP_BASE_URL
+            GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+            GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+            LINE_CLIENT_ID=$LINE_CLIENT_ID
+            LINE_CLIENT_SECRET=$LINE_CLIENT_SECRET
+            GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID
+            GITHUB_CLIENT_SECRET=$GITHUB_CLIENT_SECRET
+            X_CLIENT_ID=$X_CLIENT_ID
+            X_CLIENT_SECRET=$X_CLIENT_SECRET
+            RESEND_API_KEY=$RESEND_API_KEY
+            EOF
             docker compose pull backend
             docker compose up -d backend
             docker image prune -f
