@@ -5,6 +5,7 @@ import com.biblequiz.app.entity.AuthProvider;
 import com.biblequiz.app.repository.AppUserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -27,6 +28,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final AppUserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
 
     public OAuth2SuccessHandler(AppUserRepository userRepository,
                                 JwtTokenProvider jwtTokenProvider) {
@@ -106,6 +110,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 user.getId(), user.getEmail(), user.getRole().name());
 
         // redirect 回前端，帶上 token（前端從 URL 取出存到 localStorage）
-        response.sendRedirect("http://localhost:3000/oauth/callback?token=" + token);
+        response.sendRedirect(baseUrl + "/oauth/callback?token=" + token);
     }
 }
