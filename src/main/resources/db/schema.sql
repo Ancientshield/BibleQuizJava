@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS app_user (
     provider_id   VARCHAR(255),                                  -- OAuth provider 的 user ID（local 為 null）
     role          VARCHAR(20) NOT NULL DEFAULT 'USER',           -- USER / ADMIN
     email_verified BOOLEAN NOT NULL DEFAULT FALSE,               -- email 驗證完成才能登入
+    total_score   BIGINT NOT NULL DEFAULT 0,                     -- 累積 EXP（每答對一題 +10）
     created_at    TIMESTAMP NOT NULL DEFAULT NOW(),
     last_login_at TIMESTAMP
 );
