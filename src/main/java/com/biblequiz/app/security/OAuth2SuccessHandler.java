@@ -110,6 +110,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 user.getId(), user.getEmail(), user.getRole().name());
 
         // redirect 回前端，帶上 token（前端從 URL 取出存到 localStorage）
-        response.sendRedirect(baseUrl + "/oauth/callback?token=" + token);
+        // 尾斜線必加：Nuxt SSG 輸出 /oauth/callback/index.html，不帶斜線會觸發 nginx 301
+        response.sendRedirect(baseUrl + "/oauth/callback/?token=" + token);
     }
 }
