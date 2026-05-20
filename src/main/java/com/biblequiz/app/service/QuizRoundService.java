@@ -38,6 +38,15 @@ public class QuizRoundService {
      */
     @Transactional
     public QuizRound submitQuiz(Long userId, QuizSubmitRequest request) {
+        return submitQuiz(userId, request, false);
+    }
+
+    /**
+     * 儲存一局遊戲結果（可指定是否為匿名訪客）。
+     * 匿名 (isGuest=true) 走 guest sentinel user id,但不累加 total_score,避免 sentinel 積分被灌爆。
+     */
+    @Transactional
+    public QuizRound submitQuiz(Long userId, QuizSubmitRequest request, boolean isGuest) {
         List<QuizSubmitRequest.AnswerEntry> answers = request.getAnswers();
         if (answers == null || answers.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "作答紀錄不能為空");
@@ -74,11 +83,13 @@ public class QuizRoundService {
 
         QuizRound saved = quizRoundRepository.save(round);
 
-        // 累加總積分（答對題數 × 10）
-        AppUser user = appUserRepository.findById(userId).orElse(null);
-        if (user != null) {
-            user.setTotalScore(user.getTotalScore() + (long) correctCount * 10);
-            appUserRepository.save(user);
+        // 累加總積分（答對題數 × 10）— guest sentinel 不累加,避免被灌成天文數字
+        if (!isGuest) {
+            AppUser user = appUserRepository.findById(userId).orElse(null);
+            if (user != null) {
+                user.setTotalScore(user.getTotalScore() + (long) correctCount * 10);
+                appUserRepository.save(user);
+            }
         }
 
         return saved;
