@@ -25,7 +25,8 @@ public class QuestionSpecification {
     public static Specification<Question> withFilters(
             QuestionStatus status, Short categoryId,
             String keyword, String optionKeyword, String author,
-            LocalDate dateFrom, LocalDate dateTo) {
+            LocalDate dateFrom, LocalDate dateTo,
+            Boolean hasExplanation) {
 
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -64,6 +65,15 @@ public class QuestionSpecification {
                         cb.like(cb.lower(userRoot.get("name")), pattern),
                         cb.like(cb.lower(userRoot.get("email")), pattern)));
                 predicates.add(root.get("createdBy").in(sub));
+            }
+
+            // 有無解釋
+            if (hasExplanation != null) {
+                if (hasExplanation) {
+                    predicates.add(cb.isNotNull(root.get("explanation")));
+                } else {
+                    predicates.add(cb.isNull(root.get("explanation")));
+                }
             }
 
             // 日期區間（含頭含尾）

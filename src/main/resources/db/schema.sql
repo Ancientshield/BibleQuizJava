@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS question (
     bible_chapter    SMALLINT,                                      -- 章
     bible_verse_start SMALLINT,                                     -- 起始節
     bible_verse_end  SMALLINT,                                      -- 結束節（nullable，單節時為 null）
+    explanation      TEXT,                                           -- 題目解釋（為什麼正確答案是這個）
+    suggested_category VARCHAR(30),                                 -- 投稿者建議的新分類名稱
     status           VARCHAR(20) NOT NULL DEFAULT 'PUBLISHED',      -- DRAFT / PENDING / PUBLISHED / REJECTED
     created_by       BIGINT,                                        -- → app_user(id)，null = 系統內建種子題目
     created_at       TIMESTAMP NOT NULL DEFAULT NOW(),

@@ -47,6 +47,12 @@ public class Question {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(columnDefinition = "TEXT")
+    private String explanation;
+
+    @Column(name = "suggested_category", length = 30)
+    private String suggestedCategory;
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionOption> options;
 
@@ -92,6 +98,12 @@ public class Question {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
+
+    public String getSuggestedCategory() { return suggestedCategory; }
+    public void setSuggestedCategory(String suggestedCategory) { this.suggestedCategory = suggestedCategory; }
 
     public List<QuestionOption> getOptions() { return options; }
     public void setOptions(List<QuestionOption> options) { this.options = options; }

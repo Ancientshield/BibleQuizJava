@@ -51,6 +51,7 @@ public class BibleQuizService {
         dto.setCategory(category != null ? category.getName() : null);
 
         dto.setBibleRef(buildBibleRef(question));
+        dto.setExplanation(question.getExplanation());
 
         List<OptionDTO> optionDTOs = question.getOptions().stream()
                 .map(this::convertOptionToDTO)

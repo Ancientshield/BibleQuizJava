@@ -76,6 +76,18 @@ public class QuestionService {
         question.setStatus(QuestionStatus.PENDING);
         question.setCreatedBy(userId);
 
+        if (request.getExplanation() != null && !request.getExplanation().isBlank()) {
+            question.setExplanation(request.getExplanation().trim());
+        }
+        if (request.getCategoryId() != null) {
+            QuestionCategory category = questionCategoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "分類不存在"));
+            question.setCategory(category);
+        }
+        if (request.getSuggestedCategory() != null && !request.getSuggestedCategory().isBlank()) {
+            question.setSuggestedCategory(request.getSuggestedCategory().trim());
+        }
+
         // 建立選項，設定雙向關聯
         List<QuestionOption> options = new ArrayList<>();
         for (QuestionCreateRequest.OptionRequest optReq : request.getOptions()) {
@@ -120,6 +132,18 @@ public class QuestionService {
         checkEditPermission(question, userId, isAdmin);
 
         question.setContent(request.getContent().trim());
+        question.setExplanation(request.getExplanation() != null && !request.getExplanation().isBlank()
+                ? request.getExplanation().trim() : null);
+
+        if (request.getCategoryId() != null) {
+            QuestionCategory category = questionCategoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "分類不存在"));
+            question.setCategory(category);
+        } else {
+            question.setCategory(null);
+        }
+        question.setSuggestedCategory(request.getSuggestedCategory() != null && !request.getSuggestedCategory().isBlank()
+                ? request.getSuggestedCategory().trim() : null);
 
         // 未通過的題目編輯後，重新進入審核流程
         if (question.getStatus() == QuestionStatus.REJECTED) {
@@ -175,10 +199,11 @@ public class QuestionService {
             QuestionStatus status, Short categoryId,
             String keyword, String optionKeyword, String author,
             LocalDate dateFrom, LocalDate dateTo,
+            Boolean hasExplanation,
             boolean includeStats, Pageable pageable) {
 
         Specification<Question> spec = QuestionSpecification.withFilters(
-                status, categoryId, keyword, optionKeyword, author, dateFrom, dateTo);
+                status, categoryId, keyword, optionKeyword, author, dateFrom, dateTo, hasExplanation);
 
         // Step 1: 分頁查詢（不含 FETCH JOIN，避免 in-memory 分頁）
         Page<Question> page = questionRepository.findAll(spec, pageable);
@@ -284,6 +309,8 @@ public class QuestionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "題目不存在"));
 
         question.setContent(request.getContent().trim());
+        question.setExplanation(request.getExplanation() != null && !request.getExplanation().isBlank()
+                ? request.getExplanation().trim() : null);
 
         // 替換選項（orphanRemoval 自動清除舊選項）
         question.getOptions().clear();
@@ -451,6 +478,9 @@ public class QuestionService {
                 .map(this::convertOptionToDTO)
                 .collect(Collectors.toList());
         dto.setOptions(optionDTOs);
+
+        dto.setExplanation(question.getExplanation());
+        dto.setSuggestedCategory(question.getSuggestedCategory());
 
         dto.setCreatedBy(question.getCreatedBy());
         dto.setCreatedAt(question.getCreatedAt());

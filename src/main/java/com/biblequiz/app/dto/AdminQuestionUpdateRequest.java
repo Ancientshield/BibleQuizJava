@@ -7,6 +7,7 @@ public class AdminQuestionUpdateRequest {
 
     private String content;
     private List<OptionRequest> options;
+    private String explanation;
     private Short categoryId;
     private Short bibleBookId;
     private Short bibleChapter;
@@ -45,4 +46,7 @@ public class AdminQuestionUpdateRequest {
 
     public Short getBibleVerseEnd() { return bibleVerseEnd; }
     public void setBibleVerseEnd(Short bibleVerseEnd) { this.bibleVerseEnd = bibleVerseEnd; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
 }

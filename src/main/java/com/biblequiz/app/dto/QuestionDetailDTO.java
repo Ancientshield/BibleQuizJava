@@ -19,6 +19,8 @@ public class QuestionDetailDTO {
     private Short bibleChapter;
     private Short bibleVerseStart;
     private Short bibleVerseEnd;
+    private String explanation;
+    private String suggestedCategory;
     private List<OptionDTO> options;
     private Integer totalAnswered;
     private Integer correctCount;
@@ -59,6 +61,12 @@ public class QuestionDetailDTO {
 
     public Short getBibleVerseEnd() { return bibleVerseEnd; }
     public void setBibleVerseEnd(Short bibleVerseEnd) { this.bibleVerseEnd = bibleVerseEnd; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
+
+    public String getSuggestedCategory() { return suggestedCategory; }
+    public void setSuggestedCategory(String suggestedCategory) { this.suggestedCategory = suggestedCategory; }
 
     public List<OptionDTO> getOptions() { return options; }
     public void setOptions(List<OptionDTO> options) { this.options = options; }

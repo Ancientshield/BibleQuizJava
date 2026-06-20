@@ -8,6 +8,7 @@ public class QuestionDTO {
     private String content;
     private String category;
     private String bibleRef;
+    private String explanation;
     private List<OptionDTO> options;
 
     // ── Getters and Setters ──
@@ -22,6 +23,9 @@ public class QuestionDTO {
 
     public String getBibleRef() { return bibleRef; }
     public void setBibleRef(String bibleRef) { this.bibleRef = bibleRef; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
 
     public List<OptionDTO> getOptions() { return options; }
     public void setOptions(List<OptionDTO> options) { this.options = options; }

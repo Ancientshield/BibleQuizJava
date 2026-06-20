@@ -7,6 +7,9 @@ public class QuestionUpdateRequest {
 
     private String content;
     private List<OptionRequest> options;
+    private String explanation;
+    private Short categoryId;
+    private String suggestedCategory;
 
     public static class OptionRequest {
         private String content;
@@ -25,4 +28,13 @@ public class QuestionUpdateRequest {
 
     public List<OptionRequest> getOptions() { return options; }
     public void setOptions(List<OptionRequest> options) { this.options = options; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
+
+    public Short getCategoryId() { return categoryId; }
+    public void setCategoryId(Short categoryId) { this.categoryId = categoryId; }
+
+    public String getSuggestedCategory() { return suggestedCategory; }
+    public void setSuggestedCategory(String suggestedCategory) { this.suggestedCategory = suggestedCategory; }
 }

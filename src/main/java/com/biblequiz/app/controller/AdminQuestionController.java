@@ -50,13 +50,14 @@ public class AdminQuestionController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(required = false) Boolean hasExplanation,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "false") boolean includeStats) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<QuestionDetailDTO> result = questionService.searchQuestions(
-                status, categoryId, keyword, optionKeyword, author, dateFrom, dateTo, includeStats, pageable);
+                status, categoryId, keyword, optionKeyword, author, dateFrom, dateTo, hasExplanation, includeStats, pageable);
         return ResponseEntity.ok(result);
     }
 

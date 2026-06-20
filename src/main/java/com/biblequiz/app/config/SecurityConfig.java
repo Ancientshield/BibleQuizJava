@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/biblequiz/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/guest/**").permitAll()
+                .requestMatchers("/api/categories").permitAll()
                 .requestMatchers("/hello").permitAll()
                 .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
