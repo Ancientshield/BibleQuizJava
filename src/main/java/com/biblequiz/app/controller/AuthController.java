@@ -92,11 +92,11 @@ public class AuthController {
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.getPrincipal() == null) {
+        // 未登入時 principal 是字串 "anonymousUser"，不是 Long
+        if (authentication == null || !(authentication.getPrincipal() instanceof Long userId)) {
             return ResponseEntity.status(401).body(Map.of("error", "未登入"));
         }
 
-        Long userId = (Long) authentication.getPrincipal();
         AuthResponse response = authService.getUserInfo(userId);
         return ResponseEntity.ok(response);
     }
